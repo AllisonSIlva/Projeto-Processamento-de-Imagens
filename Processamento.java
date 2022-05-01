@@ -223,6 +223,127 @@ public class Processamento {
 		
 		return aumento;
 		
+	}
+	public static BufferedImage brilhoY (BufferedImage image, int aumento) {
+			
+		int altura = image.getHeight();
+		int largura = image.getWidth();
+		
+		BufferedImage saidaB = new BufferedImage(largura, altura, BufferedImage.TYPE_INT_RGB);
+		
+		for(int linha = 0; linha < altura; linha++) {
+			for(int coluna = 0; coluna < largura; coluna++) {
+				int rgb = image.getRGB(coluna,linha);
+				Color c = new Color(rgb);
+				int red = c.getRed();
+				int green = c.getGreen();
+				int blue = c.getBlue();
+				double y = 0.299 * red + 0.587 * green + 0.114 * blue;
+				double i = 0.596 * red - 0.274 * green - 0.322 * blue;
+				double q = 0.211 * red - 0.523 * green + 0.312 * blue;
+				double aumento2 = aumento;
+				double brilhoaum = aumento2+ y;
+				
+				double R = 1.000 * brilhoaum + 0.956 * i + 0.621 * q;
+				double G = 1.000 * brilhoaum - 0.272 * i - 0.647 * q;
+				double B = 1.000 * brilhoaum - 1.106 * i + 1.703 * q;
+				
+				int Ry = (int) R;
+				int Gy = (int) G;
+				int By = (int) B;
+				Ry = brilhoadtregra(Ry);
+				Gy = brilhoadtregra(Gy);
+				By = brilhoadtregra(By);
+				Color yiq = new Color(Ry,Gy,By);
+				saidaB.setRGB(coluna,linha,yiq.getRGB());
+								
+			}
+		}
+		return saidaB;
+		
+	}
+	
+	public static BufferedImage brilhoYM (BufferedImage image, float aumento) {
+		
+		int altura = image.getHeight();
+		int largura = image.getWidth();
+		
+		BufferedImage saidaB = new BufferedImage(largura, altura, BufferedImage.TYPE_INT_RGB);
+		
+		for(int linha = 0; linha < altura; linha++) {
+			for(int coluna = 0; coluna < largura; coluna++) {
+				int rgb = image.getRGB(coluna,linha);
+				Color c = new Color(rgb);
+				int red = c.getRed();
+				int green = c.getGreen();
+				int blue = c.getBlue();
+				double y = 0.299 * red + 0.587 * green + 0.114 * blue;
+				double i = 0.596 * red - 0.274 * green - 0.322 * blue;
+				double q = 0.211 * red - 0.523 * green + 0.312 * blue;
+				double aumento2 = aumento;
+				double brilhoaum = aumento2 * y;
+				
+				double R = 1.000 * brilhoaum + 0.956 * i + 0.621 * q;
+				double G = 1.000 * brilhoaum - 0.272 * i - 0.647 * q;
+				double B = 1.000 * brilhoaum - 1.106 * i + 1.703 * q;
+				
+				int Ry = (int) R;
+				int Gy = (int) G;
+				int By = (int) B;
+				Ry = brilhoadtregra(Ry);
+				Gy = brilhoadtregra(Gy);
+				By = brilhoadtregra(By);
+				Color yiq = new Color(Ry,Gy,By);
+				saidaB.setRGB(coluna,linha,yiq.getRGB());
+								
+			}
+		}
+		return saidaB;
+		
+	}
+	public static BufferedImage negativoYIQ (BufferedImage image) {
+		
+		int altura = image.getHeight();
+		int largura = image.getWidth();
+		
+		BufferedImage saidaB = new BufferedImage(largura, altura, BufferedImage.TYPE_INT_RGB);
+		
+		for(int linha = 0; linha < altura; linha++) {
+			for(int coluna = 0; coluna < largura; coluna++) {
+				int rgb = image.getRGB(coluna,linha);
+				Color c = new Color(rgb);
+				int red = c.getRed();
+				int green = c.getGreen();
+				int blue = c.getBlue();
+				double y = 0.299 * red + 0.587 * green + 0.114 * blue;
+				double yn = 255 - y;
+				double i = 0.596 * red - 0.274 * green - 0.322 * blue;
+				double q = 0.211 * red - 0.523 * green + 0.312 * blue;
+				
+				double R = 1.000 * yn + 0.956 * i + 0.621 * q;
+				double G = 1.000 * yn - 0.272 * i - 0.647 * q;
+				double B = 1.000 * yn - 1.106 * i + 1.703 * q;
+				
+				int Ry = (int) R;
+				int Gy = (int) G;
+				int By = (int) B;
+				Ry = brilhoadtregra(Ry);
+				Gy = brilhoadtregra(Gy);
+				By = brilhoadtregra(By);
+				Color yiq = new Color(Ry,Gy,By);
+				saidaB.setRGB(coluna,linha,yiq.getRGB());
+								
+			}
+		}
+		return saidaB;
+		
+	}
+	public static int brilhoadtregra (int pixel) {
+		if (pixel < 0) {pixel = 0;}
+		else if ( pixel > 255) {pixel = 255;}
+		return pixel;
+		
 	};
+	
 	
 }
