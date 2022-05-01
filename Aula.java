@@ -49,7 +49,7 @@ public class Aula extends JFrame implements ActionListener {
 		BufferedImage saidaB = Processamento.GbandaB(image);
 		BufferedImage saidaGray = Processamento.bandaGray(image);
 		BufferedImage neg = Processamento.negativo(image);
-		
+		BufferedImage negy = Processamento.negativoYIQ(image);
 		
 		JFrame frame = new JFrame();
 		
@@ -194,7 +194,55 @@ public class Aula extends JFrame implements ActionListener {
 			
 		});
 		
+		JPanel brilhoadt = new JPanel();
+		JPanel menuYIQ = new JPanel();
+		JLabel adtLabel = new JLabel();
+		JTextField valorBA = new JTextField(3);
+		JButton adicionarBrilho = new JButton("Adicionar brilho");
+		menuYIQ.add(valorBA);
+		menuYIQ.add(adicionarBrilho);
+		menuYIQ.add(brilhoadt);
+		adicionarBrilho.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int valor = Integer.parseInt(valorBA.getText());
+				BufferedImage brilhoadtv = Processamento.brilhoY(image, valor);
+				adtLabel.setIcon(new ImageIcon(brilhoadtv));
+				brilhoadt.removeAll();
+				brilhoadt.add(adtLabel);
+				brilhoadt.updateUI();
+				
+			}
+			
+		});	
 		
+		JPanel brilhomt = new JPanel();
+		JPanel menuYIQmt = new JPanel();
+		JLabel mtLabel = new JLabel();
+		JTextField valorBM = new JTextField(3);
+		JButton mtBrilho = new JButton("Adicionar brilho");
+		menuYIQmt.add(valorBM);
+		menuYIQmt.add(mtBrilho);
+		menuYIQmt.add(brilhomt);
+		mtBrilho.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				float valor = Float.parseFloat(valorBM.getText());
+				System.out.println(valor);
+				BufferedImage brilhomtv = Processamento.brilhoYM(image, valor);
+				mtLabel.setIcon(new ImageIcon(brilhomtv));
+				brilhomt.removeAll();
+				brilhomt.add(mtLabel);
+				brilhomt.updateUI();
+				
+			}
+			
+		});	
+		JPanel negativoY = new JPanel();
+		JLabel negativoYLabel = new JLabel(new ImageIcon(negy));
+		negativoY.add(negativoYLabel);
 		
 		tab.add("Original", original);
 		tab.add("Negativo RGB", negativo);
@@ -202,6 +250,9 @@ public class Aula extends JFrame implements ActionListener {
 		tab.add("GrayScale por Banda", grayPanel);
 		tab.add("Tonalidade por banda",tomPanel);
 		tab.add("Binarização",biPanelMenu);
+		tab.add("Brilho YIQ Aditivo", menuYIQ);
+		tab.add("Brilho YIQ Multiplicativo", menuYIQmt);
+		tab.add("Negativo YIQ", negativoY);
 		frame.getContentPane().add(tab, BorderLayout.CENTER);
 		configJanela(frame);
 	}
