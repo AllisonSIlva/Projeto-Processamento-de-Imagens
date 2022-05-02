@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 public class Processamento {
+	
 	public static BufferedImage GbandaR (BufferedImage image) {
 		int altura = image.getHeight();
 		int largura = image.getWidth();
